@@ -74,14 +74,40 @@ main() {
         die "working tree is not clean. Commit or stash changes first."
     fi
 
-    local current new branch
+    # Must run from main so the release branch forks from a clean upstream tip.
+    local current_branch
+    current_branch="$(git rev-parse --abbrev-ref HEAD)"
+    if [[ "$current_branch" != "main" ]]; then
+        die "must be on 'main' (currently on '$current_branch'). Run: git checkout main && git pull"
+    fi
+
+    # Make sure we're up to date with origin/main so the release branch is
+    # forking from the latest tip — otherwise the version bump can land on a
+    # stale base.
+    git fetch origin main --quiet
+    if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+        die "local main is not in sync with origin/main. Run: git pull --ff-only"
+    fi
+
+    local current new branch tag
     current="$(get_current_version)"
     new="$(calculate_next_version "$current" "$bump")"
     branch="release/$new"
+    tag="v$new"
+
+    # Refuse if the tag already exists locally OR on the remote — auto-release
+    # would otherwise double-tag and fail mid-flight.
+    if git rev-parse "$tag" >/dev/null 2>&1; then
+        die "tag $tag already exists locally"
+    fi
+    if git ls-remote --tags origin "$tag" | grep -q "refs/tags/$tag$"; then
+        die "tag $tag already exists on origin"
+    fi
 
     echo "current: $current"
     echo "new:     $new"
     echo "branch:  $branch"
+    echo "tag:     $tag (will be created by auto-release.yml after merge)"
     read -rp "proceed? [y/N] " confirm
     [[ "$confirm" =~ ^[Yy]$ ]] || die "aborted"
 

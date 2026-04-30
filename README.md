@@ -56,11 +56,12 @@ runner = Runner(agent=agent, app_name="my-app", plugins=[ParallelTracingPlugin()
 If you only want Search and don't want a Python dependency, the [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp) works with ADK's `MCPToolset`:
 
 ```python
+import os
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
-from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPServerParams
+from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 
 MCPToolset(
-    connection_params=StreamableHTTPServerParams(
+    connection_params=StreamableHTTPConnectionParams(
         url="https://search.parallel.ai/mcp",
         headers={"Authorization": f"Bearer {os.environ['PARALLEL_API_KEY']}"},
     ),
@@ -77,7 +78,8 @@ See [`examples/research_agent.py`](examples/research_agent.py) for a runnable de
 
 ```bash
 pip install -e ".[dev]"
-pytest
+pytest                              # unit tests (no network)
+pytest tests/integration/           # live API smoke (needs PARALLEL_API_KEY + GOOGLE_API_KEY)
 ```
 
 ## License
