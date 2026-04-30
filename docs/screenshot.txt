@@ -1,0 +1,16 @@
+$ python research_agent.py
+
+>>> What does Parallel's Search API do? Cite parallel.ai in one sentence.
+
+Parallel’s Search API is a tool designed specifically for AI agents and LLMs to perform natural language web searches and retrieve structured, token-efficient data. Unlike traditional search engines that rely on keywords, it processes a "natural language objective" to return ranked URLs with extended excerpts optimized for model consumption, reducing hallucinations and improving accuracy in complex research tasks ([parallel.ai](https://docs.parallel.ai/search/search-quickstart)).
+
+According to the developer documentation: "The Search API takes a natural language objective and returns relevant excerpts optimized for LLMs, replacing multiple keyword searches with a single call for broad or complex queries" ([parallel.ai](https://docs.parallel.ai/search/search-quickstart)).
+
+### Key Features
+*   **Search Modes:** Offers specialized modes including **one-shot** (comprehensive), **agentic** (concise for multi-step reasoning), and **fast** (latency-sensitive) ([parallel.ai](https://docs.parallel.ai/search/modes)).
+*   **LLM Optimization:** Excerpts are curated to fit efficiently into a model's context window, lowering token costs while maintaining high relevance ([parallel.ai](https://parallel.ai/)).
+*   **Accuracy Benchmarks:** Parallel claims its enterprise deep research API achieves up to 48% accuracy on complex benchmarks, significantly outperforming the native browsing capabilities of standard LLMs ([parallel.ai](https://parallel.ai/)).
+*   **Evidence-Based:** Every output provides verifiability and provenance, ensuring AI agents can cite their sources accurately ([parallel.ai](https://parallel.ai/)).
+
+--- Parallel call trace (1 calls) ---
+  {"tool": "_web_search", "latency_s": 1.4036233751103282, "citation_count": 5}
