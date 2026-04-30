@@ -9,21 +9,18 @@ from google.adk.tools import FunctionTool
 from ._client import get_client
 
 
-def _extract(
+def extract(
     urls: Annotated[
         list[str],
-        "URLs to extract clean content from. 1–20 per call. Fully-qualified "
-        "http(s) URLs only.",
+        "URLs to extract content from. 1–20 per call. Fully-qualified http(s) URLs only.",
     ],
     objective: Annotated[
         str | None,
-        "Optional focus: what to keep relevant in the extraction. Improves "
-        "signal-to-noise on long pages. Omit for full extraction.",
+        "Optional focus: what to keep relevant. Improves signal-to-noise on long pages.",
     ] = None,
     full_content: Annotated[
         bool,
-        "If True, returns the full cleaned page content. If False (default), "
-        "returns LLM-optimized excerpts only.",
+        "If True, returns full cleaned page content. If False (default), returns excerpts only.",
     ] = False,
 ) -> dict[str, Any]:
     """Extract clean content from web pages and PDFs in batch.
@@ -36,10 +33,12 @@ def _extract(
     kwargs: dict[str, Any] = {"urls": list(urls)}
     if objective is not None:
         kwargs["objective"] = objective
+    # full_content goes inside advanced_settings, not at the top level —
+    # the SDK rejects it as an unexpected kwarg otherwise.
     if full_content:
-        kwargs["full_content"] = True
+        kwargs["advanced_settings"] = {"full_content": True}
     response = client.extract(**kwargs)
     return response.model_dump()
 
 
-extract = FunctionTool(_extract)
+extract = FunctionTool(extract)

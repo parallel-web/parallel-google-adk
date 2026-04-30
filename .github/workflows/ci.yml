@@ -26,7 +26,9 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Run tests
-        run: pytest -v --ignore=tests/smoke_live.py
+        # Live-API integration tests under tests/integration/ are skipped via
+        # pytest addopts in pyproject.toml.
+        run: pytest -v
 
   lint:
     runs-on: ubuntu-latest

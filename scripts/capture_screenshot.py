@@ -63,9 +63,7 @@ async def main() -> int:
         plugins=[ParallelTracingPlugin()],
     )
 
-    prompt = (
-        "What does Parallel's Search API do? Cite parallel.ai in one sentence."
-    )
+    prompt = "What does Parallel's Search API do? Cite parallel.ai in one sentence."
 
     buf.write("$ python research_agent.py\n")
     buf.write(f"\n>>> {prompt}\n\n")

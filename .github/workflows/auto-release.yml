@@ -22,8 +22,12 @@ jobs:
     steps:
       - name: Check if this is a version bump commit
         id: check
+        # Read commit message via env var, NOT direct ${{ }} interpolation in
+        # the run script — interpolating user-controllable text into a shell
+        # heredoc enables command injection via crafted commit messages.
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
           if [[ "$COMMIT_MSG" =~ ^chore:\ bump\ version\ to\ ([0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?) ]]; then
             VERSION="${BASH_REMATCH[1]}"
             echo "should_release=true" >> "$GITHUB_OUTPUT"

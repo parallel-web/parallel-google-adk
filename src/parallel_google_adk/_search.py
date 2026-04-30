@@ -15,16 +15,14 @@ from google.adk.tools import FunctionTool
 from ._client import get_client
 
 
-def _web_search(
+def web_search(
     objective: Annotated[
         str,
-        "Natural-language description of what you want to find. Be specific — "
-        "the model uses this to score and select the most relevant excerpts.",
+        "Natural-language description of what you want to find.",
     ],
     queries: Annotated[
         list[str],
-        "1–5 keyword search queries (3–6 words each). Each query is run "
-        "independently; results are merged and re-ranked.",
+        "1–5 keyword search queries (3–6 words each).",
     ],
     max_results: Annotated[
         int,
@@ -32,15 +30,14 @@ def _web_search(
     ] = 5,
     max_chars_total: Annotated[
         int | None,
-        "Optional ceiling on total characters across all excerpts. Useful for "
-        "controlling token budget on long-running agent loops.",
+        "Optional ceiling on total characters across all excerpts.",
     ] = None,
 ) -> dict[str, Any]:
     """Search the web for current, citation-aware information.
 
     Returns LLM-optimized excerpts with source URLs. Use this when you need
-    grounded facts the model wouldn't know, or when you don't already have
-    URLs to fetch. Prefer web_fetch when you have specific URLs in hand.
+    grounded facts or don't have specific URLs in hand. Prefer web_fetch when
+    you already know which URL to read.
     """
     client = get_client()
     kwargs: dict[str, Any] = {
@@ -54,12 +51,11 @@ def _web_search(
     return response.model_dump()
 
 
-def _web_fetch(
+def web_fetch(
     url: Annotated[str, "The URL to fetch. Must be a fully-qualified http(s) URL."],
     objective: Annotated[
         str | None,
-        "Optional focus for the extraction — what to keep relevant. If omitted, "
-        "returns the full cleaned content.",
+        "Optional focus for the extraction — what to keep relevant. Omit for full extraction.",
     ] = None,
 ) -> dict[str, Any]:
     """Fetch a single URL and return clean, LLM-ready content.
@@ -82,5 +78,5 @@ def _web_fetch(
     )
 
 
-web_search = FunctionTool(_web_search)
-web_fetch = FunctionTool(_web_fetch)
+web_search = FunctionTool(web_search)
+web_fetch = FunctionTool(web_fetch)
