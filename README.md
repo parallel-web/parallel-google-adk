@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/parallel-symbol-white.png">
-    <img src="docs/assets/parallel.png" alt="Parallel" width="120" height="120" />
-  </picture>
+  <img src="docs/assets/parallel.png" alt="Parallel" width="120" height="120" />
 </p>
 
 # parallel-google-adk
@@ -16,8 +13,8 @@ Google [Agent Development Kit](https://adk.dev) (ADK) tools and plugin for [Para
 ## Install
 
 ```bash
-pip install parallel-google-adk
-export PARALLEL_API_KEY=your-key-here  # get one at https://platform.parallel.ai
+uv add parallel-google-adk           # or: pip install parallel-google-adk
+export PARALLEL_API_KEY=your-key-here # get one at https://platform.parallel.ai
 ```
 
 ## Quickstart
