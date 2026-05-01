@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="docs/assets/parallel.png" alt="Parallel" width="120" height="120" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/parallel-symbol-white.png">
+    <img src="docs/assets/parallel.png" alt="Parallel" width="120" height="120" />
+  </picture>
 </p>
 
 # parallel-google-adk
