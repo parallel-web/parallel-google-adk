@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="docs/assets/parallel.png" alt="Parallel" width="120" height="120" />
+</p>
+
 # parallel-google-adk
+
+[![PyPI](https://img.shields.io/pypi/v/parallel-google-adk.svg)](https://pypi.org/project/parallel-google-adk/)
+[![Python](https://img.shields.io/pypi/pyversions/parallel-google-adk.svg)](https://pypi.org/project/parallel-google-adk/)
+[![License](https://img.shields.io/pypi/l/parallel-google-adk.svg)](LICENSE)
 
 Google [Agent Development Kit](https://adk.dev) (ADK) tools and plugin for [Parallel](https://parallel.ai) — grounded web search, clean extraction, and cited deep research with structured output.
 
@@ -72,7 +80,9 @@ This package is the typed-FunctionTool path for users who want fine-grained sche
 
 ## Examples
 
-See [`examples/research_agent.py`](examples/research_agent.py) for a runnable demo.
+See [`examples/research_agent.py`](examples/research_agent.py) for a runnable demo. A run looks like this:
+
+![Research agent run](docs/assets/research_agent.png)
 
 ## Development
 
