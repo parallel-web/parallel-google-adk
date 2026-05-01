@@ -19,3 +19,8 @@ venv/
 .idea/
 .vscode/
 .DS_Store
+
+# Brand asset working files (downloaded by scripts/render_screenshot.py at runtime)
+docs/assets/FTSystemMono-*.ttf
+docs/assets/parallel-symbol-*.png
+docs/assets/parallel-logo-*.png
