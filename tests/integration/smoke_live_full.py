@@ -86,6 +86,7 @@ async def main() -> int:
         print("PARALLEL_API_KEY not set; aborting.", file=sys.stderr)
         return 1
 
+    # Report unexpected errors from each check and keep running the remaining checks.
     failures: list[str] = []
 
     # 1. Direct _enrich() — first time hitting the live Task API enrich path.
@@ -125,7 +126,7 @@ async def main() -> int:
             # Also verify citation_count heuristic on Task API shape.
             citations = _count_citations(result)
             print(f"_count_citations on Task result: {citations}")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         failures.append(f"_enrich: {e}")
         traceback.print_exc()
 
@@ -134,7 +135,7 @@ async def main() -> int:
     # 2. LLM agent — web_fetch
     _line("agent: should pick web_fetch")
     try:
-        text, trace = await _run_agent_prompt(
+        _, trace = await _run_agent_prompt(
             "Fetch the page at https://parallel.ai/ and summarize the headline in one sentence.",
             expected_tool="web_fetch",
         )
@@ -148,14 +149,14 @@ async def main() -> int:
                 failures.append(
                     f"agent web_fetch: tracing citation_count=0 for {call['tool']}"
                 )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         failures.append(f"agent web_fetch: {e}")
         traceback.print_exc()
 
     # 3. LLM agent — extract (multi-URL hint)
     _line("agent: should pick extract")
     try:
-        text, trace = await _run_agent_prompt(
+        _, trace = await _run_agent_prompt(
             "Extract the main content from these two URLs and tell me what they have in common: "
             "https://parallel.ai/ and https://docs.parallel.ai/",
             expected_tool="extract",
@@ -165,7 +166,7 @@ async def main() -> int:
             failures.append(
                 f"agent extract: no relevant tool called (got {tools_called})"
             )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         failures.append(f"agent extract: {e}")
         traceback.print_exc()
 
@@ -173,7 +174,7 @@ async def main() -> int:
     if os.environ.get("RUN_DEEP") == "1":
         _line("agent: should pick deep_research")
         try:
-            text, trace = await _run_agent_prompt(
+            _, trace = await _run_agent_prompt(
                 "Do deep research: what are the three core APIs Parallel offers, with a "
                 "one-sentence description of each? Use the deep_research tool.",
                 expected_tool="deep_research",
@@ -181,7 +182,7 @@ async def main() -> int:
             if not any(c.get("tool") == "deep_research" for c in trace):
                 tools_called = [c.get("tool") for c in trace]
                 failures.append(f"agent deep_research: not called (got {tools_called})")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             failures.append(f"agent deep_research: {e}")
             traceback.print_exc()
     else:
