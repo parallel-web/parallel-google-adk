@@ -1,9 +1,8 @@
 """Parallel Search API as ADK FunctionTools.
 
-Most agents should prefer the Search MCP (https://search.parallel.ai/mcp) over
-these FunctionTools — it's the same surface with no SDK dependency. This module
-exists for users who want everything Parallel-related to flow through the
-parallel-web SDK with a single auth path.
+ADK can use Parallel MCP (https://mcp.parallel.ai/mcp) directly for Search
+and Fetch. These FunctionTools use the parallel-web SDK for a shared auth
+path across this package.
 """
 
 from __future__ import annotations

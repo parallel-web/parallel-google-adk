@@ -17,10 +17,10 @@ Usage:
     )
     runner = Runner(agent=agent, app_name="my-app", plugins=[ParallelTracingPlugin()])
 
-For Search alone, the Search MCP at https://search.parallel.ai/mcp is a simpler
-default — see the integration docs for the MCPToolset wiring. This package is
-the typed-FunctionTool path for users who want fine-grained schemas, hidden
-polling, structured enrichment, and tracing.
+For Search and Fetch, see the integration docs for connecting ADK directly to
+Parallel MCP at https://mcp.parallel.ai/mcp. This package provides typed
+FunctionTools with fine-grained schemas, hidden polling, structured enrichment,
+and tracing.
 """
 
 from importlib.metadata import PackageNotFoundError, version
