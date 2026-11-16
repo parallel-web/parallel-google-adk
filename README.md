@@ -61,18 +61,19 @@ runner = Runner(agent=agent, app_name="my-app", plugins=[ParallelTracingPlugin()
 
 ## MCP alternative
 
-If you only want Search and don't want a Python dependency, the [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp) works with ADK's `MCPToolset`:
+If you only need Search and Fetch, you can connect ADK directly to [Parallel MCP](https://docs.parallel.ai/integrations/mcp/quickstart) without installing this package. Install MCP support with `pip install 'google-adk[mcp]'`.
 
 ```python
 import os
-from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
+from google.adk.tools.mcp_tool.mcp_toolset import McpToolset
 
-MCPToolset(
+McpToolset(
     connection_params=StreamableHTTPConnectionParams(
-        url="https://search.parallel.ai/mcp",
+        url="https://mcp.parallel.ai/mcp",
         headers={"Authorization": f"Bearer {os.environ['PARALLEL_API_KEY']}"},
     ),
+    tool_filter=["web_search", "web_fetch"],
 )
 ```
 

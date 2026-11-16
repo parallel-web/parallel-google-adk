@@ -8,6 +8,8 @@ import pytest
 
 
 def test_public_imports() -> None:
+    from google.adk.tools import FunctionTool
+
     from parallel_google_adk import (
         ParallelTracingPlugin,
         deep_research,
@@ -18,8 +20,6 @@ def test_public_imports() -> None:
     )
 
     # Tools should be FunctionTool instances with public, LLM-friendly names.
-    from google.adk.tools import FunctionTool
-
     for tool, expected_name in [
         (web_search, "web_search"),
         (web_fetch, "web_fetch"),
